@@ -45,7 +45,8 @@ tab-bar {
 tab-bar tab-bar-item {
   color: #b0b1b4;
   font-family: "Roboto";
-  font-size: 10px;
+  font-size: 24px;
+  line-height: 24px;
 }
 
 tab-bar tab-bar-item:selected {
@@ -58,16 +59,4 @@ tab-bar divider {
 
 tab-bar tab-bar-item marker-top:selected {
   background-color: #1596f7;
-}
-
-tab-bar-item#settings {
-  background-image: url(icons/cog.svg);
-}
-
-tab-bar-item#index {
-  background-image: url(icons/home.svg);
-}
-
-tab-bar-item#internet {
-  background-image: url(icons/search.svg);
 }

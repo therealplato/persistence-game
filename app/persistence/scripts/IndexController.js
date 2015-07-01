@@ -1,7 +1,8 @@
 angular
   .module('persistence')
   .controller('IndexController', function($scope, supersonic) {
-    // Controller functionality here
+    var dayMs = 1000 * 60 * 60 * 24;
+
     $scope.tracks = [{
       name: "Exercise",
       data: [{
@@ -15,7 +16,18 @@ angular
       },{
         t: 1433308683257,
       }]
-    }];
+    }, {
+      name: "Duolingo",
+      data: []
+    }
+    ];
+
+    supersonic.data.channel('new_tracks').subscribe(function(newTrack){
+      console.log('Got new track:');
+      console.log(newTrack);
+      $scope.tracks.unshift(newTrack);
+      $scope.$apply();
+    });
 
     $scope.findTrack = function(name){
       $scope.tracks.forEach(function(repeaterTrack){
@@ -26,22 +38,43 @@ angular
     }
 
     $scope.do = function(DOMtrack){
-      var realTrack = findTrack(DOMtrack.name); // we need a reference to the one in the repeater
+      //var realTrack = findTrack(DOMtrack.name); // we need a reference to the one in the repeater
       var point = {
         t: new Date().valueOf(),
       }
-      realTrack.data.unshift(point); // add to front
+      DOMtrack.data.unshift(point); // add to front
+    }
+
+    $scope.tsLastMidnight = function(){
+      var lastMidnight = new Date();
+      lastMidnight.setHours(0);
+      lastMidnight.setMinutes(0);
+      return lastMidnight.valueOf();
+    }
+
+    $scope.tsNow = function(){
+      var now = new Date();
+      return now.valueOf();
+    }
+
+    $scope.doneToday = function(DOMtrack){
+      var n = DOMtrack.data.length;
+      if(n === 0){
+        return false;
+      }
+      var earliest = $scope.tsLastMidnight();
+      // Check the most recent data point:
+      if(DOMtrack.data[0].ts < earliest){
+        return false;
+      } else {
+        return true;
+      }
+
     }
 
     $scope.countDayStreak = function(data){
-      var dayMs = 1000 * 60 * 60 * 24;
       var streak = 0;
-
-      var now = new Date();
-      var lastMidnight = new Date(now);
-      lastMidnight.setHours(0);
-      lastMidnight.setMinutes(0);
-      lastMidnight = lastMidnight.valueOf();
+      var lastMidnight = $scope.tsLastMidnight();
 
       var countedToday = false; // have we already counted an earlier datapoint today?
 

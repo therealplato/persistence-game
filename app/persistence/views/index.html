@@ -2,26 +2,34 @@
 
   <super-navbar>
     <super-navbar-title side="left">
-      Persistence
+      Today's Persistence
     </super-navbar-title>
   </super-navbar>
 
   <div layout="column" class="padding">
-    <p>Keep track of your activities. Try to maintain the longest daily streak you can.</p>
-    <super-navigate view-id="persistence#new-track">
-      <button class="button button-block button-positive icon-left super-fork-repo">      Track another thing
-      </button>
-    </super-navigate>
     <div flex class="scroll-y">
-      <div class="list" ng-repeat="track in tracks" layout="column">
-        <h4 ng-bind="track.name"></h4>
-        <div layout="row">
-          <span flex>{{countDayStreak(track.data)}} day streak</span>
-          <button
-            class="button button-small button-outline button-balanced icon-left super-ios-pulse"
-            ng-click="do(track)"
-          >Do it!</button>
+      <div class="list" ng-repeat="track in tracks" layout="row">
+        <div layout="column" flex>
+          <h4 ng-bind="track.name"></h4>
+          <span>{{countDayStreak(track.data)}} day streak</span>
+          <span
+            ng-if="track.data.length > 0"
+          >Last done {{track.data[0].t | momentPretty}}</span>
+          <span
+            ng-if="track.data.length === 0"
+          >You've never done {{track.name}}, GL!</span>
         </div>
+        <button
+          ng-if="!doneToday(track)"
+          class="button button-outline button-calm icon-left super-ios-pulse"
+          ng-click="do(track)"
+        >Do it!</button>
+        <button
+          ng-if="doneToday(track)"
+          ng-disabled
+          class="button button-balanced icon-left super-checkmark"
+          ng-click="do(track)"
+        >Done!</button>
         <!--
         <pre><code>{{track.data|json}}</code></pre>
         -->
