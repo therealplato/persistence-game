@@ -17,6 +17,22 @@ angular
       }]
     }];
 
+    $scope.findTrack = function(name){
+      $scope.tracks.forEach(function(repeaterTrack){
+        if(name === repeaterTrack.name){
+          return repeaterTrack;
+        }
+      })
+    }
+
+    $scope.do = function(DOMtrack){
+      var realTrack = findTrack(DOMtrack.name); // we need a reference to the one in the repeater
+      var point = {
+        t: new Date().valueOf(),
+      }
+      realTrack.data.unshift(point); // add to front
+    }
+
     $scope.countDayStreak = function(data){
       var dayMs = 1000 * 60 * 60 * 24;
       var streak = 0;

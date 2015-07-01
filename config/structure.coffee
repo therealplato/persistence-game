@@ -3,21 +3,21 @@
 module.exports =
 
   # See styling options for tabs and other native components in app/common/native-styles/ios.css or app/common/native-styles/android.css
-  tabs: [
-    {
-      title: "Track"
-      id: "index"
-      location: "persistence#index"
-    }
-    {
-      title: "Configure"
-      id: "settings"
-      location: "example#settings"
-    }
-  ]
+  #tabs: [
+  #  {
+  #    title: "Track"
+  #    id: "index"
+  #    location: "persistence#index"
+  #  }
+  #  {
+  #    title: "Configure"
+  #    id: "settings"
+  #    location: "example#settings"
+  #  }
+  #]
 
-  #rootView:
-    #location: "persistence#index"
+  rootView:
+    location: "persistence#index"
     #location: "example#settings"
 
   preloads: [

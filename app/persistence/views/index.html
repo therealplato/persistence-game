@@ -1,27 +1,31 @@
 <div ng-controller="IndexController">
 
   <super-navbar>
-    <super-navbar-title>
+    <super-navbar-title side="left">
       Persistence
     </super-navbar-title>
   </super-navbar>
 
-  <div class="padding">
-    <h1>Progress</h1>
+  <div layout="column" class="padding">
     <p>Keep track of your activities. Try to maintain the longest daily streak you can.</p>
-    <div class="list" ng-repeat="track in tracks">
-      <span ng-bind="track.name"></span>
-      <span>{{countDayStreak(track.data)}}</span>
-      <pre><code>{{track.data|json}}</code></pre>
+    <super-navigate view-id="persistence#new-track">
+      <button class="button button-block button-positive icon-left super-fork-repo">      Track another thing
+      </button>
+    </super-navigate>
+    <div flex class="scroll-y">
+      <div class="list" ng-repeat="track in tracks" layout="column">
+        <h4 ng-bind="track.name"></h4>
+        <div layout="row">
+          <span flex>{{countDayStreak(track.data)}} day streak</span>
+          <button
+            class="button button-small button-outline button-balanced icon-left super-ios-pulse"
+            ng-click="do(track)"
+          >Do it!</button>
+        </div>
+        <!--
+        <pre><code>{{track.data|json}}</code></pre>
+        -->
+      </div>
     </div>
   </div>
-
-  <super-navigate view-id="persistence#new-track">
-    <button class="button button-block button-positive icon-left super-fork-repo">New</button>
-  </super-navigate>
-
-  <super-navigate view-id="example#learn-more">
-    <button class="button button-block button-positive icon-left super-university">Learn more</button>
-  </super-navigate>
-
 </div>
