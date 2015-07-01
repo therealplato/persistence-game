@@ -2,16 +2,22 @@
 
   <super-navbar>
     <super-navbar-title>
-      Index
+      Persistence
     </super-navbar-title>
   </super-navbar>
 
   <div class="padding">
-    <h1>Pow! Here's your fresh module!</h1>
+    <h1>Progress</h1>
+    <p>Keep track of your activities. Try to maintain the longest daily streak you can.</p>
+    <div class="list" ng-repeat="track in tracks">
+      <span ng-bind="track.name"></span>
+      <span>{{countDayStreak(track.data)}}</span>
+      <pre><code>{{track.data|json}}</code></pre>
+    </div>
   </div>
 
-  <super-navigate view-id="example#using-the-scanner">
-    <button class="button button-block button-positive icon-left super-wand">Using the AppGyver Scanner</button>
+  <super-navigate view-id="persistence#new-track">
+    <button class="button button-block button-positive icon-left super-fork-repo">New</button>
   </super-navigate>
 
   <super-navigate view-id="example#learn-more">
